@@ -1,24 +1,60 @@
-import logo from './logo.svg';
 import './App.css';
+import Alert from './components/Alert';
+import Abouts from './components/Abouts';
+import Navbars from './components/Navbar';
+import TextForm from './components/TextForm';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+function App(props) {
+  const [mode,setMode]=useState('light');
+  const [textformode,setTextforMode]=useState('Enable light mode');
+  const [alertmsg,setAlertmasg]=useState(null)
+
+  const Alertmassaged=(masg,type)=>{
+    setAlertmasg({'msg':masg,'type':type})
+
+    setTimeout(() => {
+      setAlertmasg('')
+    },2000);
+
+  }
+
+  const ChangeMode=()=>{
+    if(mode==='light'){
+      setMode('dark');
+      setTextforMode('Enable light mode');
+      document.body.style.backgroundColor='grey';
+      document.title='Text utill it is dark mode'
+      Alertmassaged('Your Dark Mode is Enabled Now','success')
+    }
+    else{
+      setMode('light');
+      setTextforMode('Enable Dark mode');
+      document.body.style.backgroundColor='white';
+      Alertmassaged('Your light Mode is Enabled Now','success')
+      document.title='Text utill it is light mode'
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {/* if you want see default props then remove title value completely here i have not passing about value it takes from bydefault value which is decliear in component navbar   */}
+    <BrowserRouter>
+    <Navbars mode={mode} toggle={ChangeMode} textformode={textformode} title="Textutile test pass as a props" hometext="Home" ></Navbars>
+    <Alert almssage={alertmsg} />
+    <Routes>
+      <Route exact path='/about' element={<Abouts heading='Abouts' />} />
+      <Route exact path='/' element={<TextForm mode={mode} alertmessag={Alertmassaged} heading="Text Analyzers" />} />
+      
+    </Routes>
+    {/* in previous i have used exact becaut react router match partial so in this condition it will match exact path */}
+    
+    </BrowserRouter>
+    
+    
+    {/* <Abouts heading='Abouts' /> */}
+    </>
+    
   );
 }
 
