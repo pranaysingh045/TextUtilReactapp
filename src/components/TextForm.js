@@ -61,6 +61,8 @@ export default function TextForm(props) {
         <p1 style={{color:props.mode==='dark'?'white':'black'}}>{textchange.length>0?textchange:'Please Enter text for previe'}</p1>
 
     </div>
+    {/* <iframe src="http://localhost:8501" width="100%" height="600px"></iframe> */}
+
     </>
   )
 }

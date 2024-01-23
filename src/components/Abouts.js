@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-
+import React,{useContext, useEffect, useState} from 'react'
+import Notecontext from '../context/Notecontext'
 export default function Abouts(props) {
     const [styles,setStyle]=useState({color:'black',backgroundColor:'white'})
     const [butontext,setbuttentext]=useState('Enable Dark Mode')
@@ -15,11 +15,17 @@ export default function Abouts(props) {
         }
         
     }
+const a =useContext(Notecontext)
+
+useEffect(()=>{
+    a.update()
+
+})
   return (
     <>
     
     <div className='container my-4' style={styles}>
-            <h2>{props.heading}</h2>
+            <h2>{props.heading} this is my context variable {a.change.name} {a.change.Age}</h2>
             <div id="accordion">
         <div class="card" style={styles}>
             <div class="card-header" id="headingOne" >

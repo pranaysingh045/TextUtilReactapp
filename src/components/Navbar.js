@@ -1,8 +1,14 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link,useLocation } from 'react-router-dom'
 
 export default function Navbars(props) {
+
+  let location=useLocation();
+  useEffect(() => {
+    console.log('this is path',location.pathname)
+  }, [location])
+  
   return (
     <>
     <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
@@ -13,10 +19,10 @@ export default function Navbars(props) {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <Link className="nav-link" to="/">{props.hometext} <span className="sr-only">(current)</span></Link>
+          <li  className={`nav-item ${location.pathname==='/'?'active':''}`}>
+            <Link className="nav-link"  to="/">{props.hometext} <span className="sr-only">(current)</span></Link>
           </li>
-          <li className="nav-item">
+          <li className={`nav-item ${location.pathname==='/about'?'active':''}`}>
             <Link className="nav-link" to="/about">{props.abouttext}</Link>
           </li>
           <li className="nav-item dropdown">
@@ -24,8 +30,8 @@ export default function Navbars(props) {
               Dropdown
             </a>
             <div className="dropdown-menu">
-              <a className="dropdown-item" href="/">Action</a>
-              <a className="dropdown-item" href="/">Another action</a>
+              <Link className="dropdown-item" to="/texteditor">TextEditor</Link>
+              <Link className="dropdown-item" to="/usereftest">useRefTest</Link>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="/">Something else here</a>
             </div>
